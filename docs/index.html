@@ -66,6 +66,7 @@
 
         playButton.addEventListener("click", function() {
             randNum = Math.floor(Math.random() * 10) + 1;
+            document.getElementById("tries-p").hidden = true;
             inputElement.readOnly = false;
             submitButton.disabled = false;
             document.getElementById("tries-p").hidden = false;
