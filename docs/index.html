@@ -67,13 +67,15 @@
         playButton.addEventListener("click", function() {
             randNum = Math.floor(Math.random() * 10) + 1;
             document.getElementById("tries-p").hidden = true;
+            document.getElementById("message").hidden = true;
             inputElement.readOnly = false;
             submitButton.disabled = false;
-            document.getElementById("tries-p").hidden = false;
-            document.getElementById("message").hidden = false;
         });
 
         submitButton.addEventListener("click", function() {
+            document.getElementById("tries-p").hidden = false;
+            document.getElementById("message").hidden = false;
+
             if(randNum == inputElement.value) {
                 inputElement.readOnly = true;
                 submitButton.disabled = true;
@@ -90,10 +92,12 @@
                     document.getElementById("message").textContent = "Wow you suck. Play again?";
                     document.getElementById("tries-p").hidden = false;
                     document.getElementById("message").hidden = false;
+                    tries = 0
                 }
                 else {
                     document.getElementById("tries-p").textContent = tries;
-                    document.getElementById("message").textContent = "Woops, try again";
+                    if(inputElement.value < randNum) {document.getElementById("message").textContent = "Woops, try again. Your guess is too low";}
+                    else if(inputElement.value > randNum) {document.getElementById("message").textContent = "Woops, try again. Your guess is too high";}
                     document.getElementById("tries-p").hidden = false;
                     document.getElementById("message").hidden = false;
                 }
