@@ -38,25 +38,68 @@
 
         <hr>
         <div>
-            <button id="play">Play New Game!</button>
+            <button id="play-button">Play New Game!</button>
         </div>
         <div>
             <label for="guess-input">Guess:</label>
-            <input type="number" id="guess-input" min="1" max="10" placeholder="Enter your guess">
+            <input type="number" id="guess-input" min="1" max="10" placeholder="Enter your guess 0-10" readonly>
         </div>
 
         <div>
-            <button id="guess-button">Submit Guess</button>
+            <button disabled id="guess-button">Submit Guess</button>
         </div>
 
         <div>
-            <p id="message"></p>
+            <p hidden id="tries-p"></p>
+            <p hidden id="message"></p>
         </div>
         <hr>
     </div>
 
     <script>
         // JavaScript code goes here   
+        const playButton = document.getElementById("play-button");
+        const submitButton = document.getElementById("guess-button");
+        const inputElement = document.getElementById("guess-input"); 
+        var randNum = 0
+        var tries = 0
+
+        playButton.addEventListener("click", function() {
+            randNum = Math.floor(Math.random() * 10) + 1;
+            inputElement.readOnly = false;
+            submitButton.disabled = false;
+            document.getElementById("tries-p").hidden = false;
+            document.getElementById("message").hidden = false;
+        });
+
+        submitButton.addEventListener("click", function() {
+            if(randNum == inputElement.value) {
+                inputElement.readOnly = true;
+                submitButton.disabled = true;
+                document.getElementById("message").hidden = false;
+                tries = 0;
+                document.getElementById("message").textContent = "CONGRATS YOU WON OMG GOOD JOB!!! Play again?";
+            }
+            else {
+                tries++;
+                if(tries >= 3) {
+                    inputElement.readOnly = true;
+                    submitButton.disabled = true;
+                    document.getElementById("tries-p").textContent = tries;
+                    document.getElementById("message").textContent = "Wow you suck. Play again?";
+                    document.getElementById("tries-p").hidden = false;
+                    document.getElementById("message").hidden = false;
+                }
+                else {
+                    document.getElementById("tries-p").textContent = tries;
+                    document.getElementById("message").textContent = "Woops, try again";
+                    document.getElementById("tries-p").hidden = false;
+                    document.getElementById("message").hidden = false;
+                }
+            }
+        });
+
+
     </script>
 </body>
 
